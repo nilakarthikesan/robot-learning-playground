@@ -7,6 +7,11 @@ The curriculum is built around three PyTorch tutorials, worked through in order,
 robotics project attached to each one so the concept lands on something physical instead of
 staying abstract.
 
+The target is specific: being able to hold a real conversation about **data-driven dexterous
+manipulation with multi-fingered hands** — tactile sensing, learning from few demonstrations,
+and human-to-robot retargeting. See `notes/00-research-context.md` for why that's the target
+and which papers matter.
+
 ## Why these three tutorials
 
 The tutorials are about text (classifying names, translating French to English). That looks
@@ -33,6 +38,12 @@ Learning it on text first is a feature, not a detour: text data is tiny, trains 
 in minutes, and has no simulator, no robot, and no reward function to confound things. You get
 to isolate the architecture.
 
+For multi-fingered hands specifically the mapping is even more direct. Tactile and
+proprioceptive streams *are* variable-length sequences, which is the char-RNN case. Retargeting
+a human hand pose onto a robot hand with different kinematics *is* translation between two
+sequences with no frame-by-frame correspondence, which is the seq2seq case. And attention is how
+you express "which contacts matter right now."
+
 ## Stages
 
 Each stage has notes (the concepts, in prose, with the parts that are genuinely subtle called
@@ -42,8 +53,8 @@ out) and code (a faithful walkthrough of the tutorial, plus a robotics bridge).
 | --- | --- | --- | --- |
 | 1 | Tensors, autograd, `nn.Module`, training loops | [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html) | Inverse kinematics for a 2-link arm, solved by gradient descent |
 | 2 | RNNs, hidden state, sequence -> label | [Char-RNN Classification](https://docs.pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) | Classify arm trajectories into motion primitives |
-| 3 | Encoder-decoder, attention, teacher forcing | [Seq2Seq Translation](https://docs.pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) | Language command -> action sequence, with an attention heatmap |
-| 4 | Where this becomes real robot learning | reading list | read one policy paper and map it onto stage 3 |
+| 3 | Encoder-decoder, attention, teacher forcing | [Seq2Seq Translation](https://docs.pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) | Retargeting as translation: human hand poses -> robot joint commands, with an attention heatmap |
+| 4 | Non-parametric policies and self-supervised representations | VINN, BYOL/VICReg, T-Dex | Nearest-neighbor policy vs. the regression policy that failed in stage 1 |
 
 ## Layout
 

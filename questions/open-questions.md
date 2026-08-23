@@ -38,51 +38,73 @@ Status: `open` / `answered`
 
 ---
 
-## Section 2 — Worth actually asking her
+## Section 2 — Worth actually asking Irmak
 
-Ordered by how much I expect the answer to change what I build next.
+Tailored to her actual research (dexterous manipulation with multi-fingered hands — see
+`../notes/00-research-context.md`). Ordered by how much the answer would change what I build
+next. **Send one at a time**, starting with #1.
 
-### About her setup (highest value — I can't get these anywhere else)
+### The strongest one (send first)
 
-1. **What are the observation and action spaces in your work?** Specifically: are actions
-   absolute joint positions, joint deltas, end-effector poses, or velocities? I've read that
-   this choice matters more than the architecture, and I'd like to understand why it's
-   contentious rather than just picking one.
+1. **Is avoiding mode-averaging part of why T-Dex uses non-parametric policies?** My stage 1
+   experiment: an MLP learning inverse kinematics for a 2-link arm with joint-space MSE fails
+   badly (0.94 m error on a 1.7 m arm) purely because each target has two valid elbow
+   configurations and MSE converges to their average. A nearest-neighbor policy seems
+   structurally immune to that, since retrieval can't average two incompatible demos. Is
+   that part of the reasoning, or is the motivation mostly data efficiency given you're
+   working from a handful of demos?
 
-2. **Sim, real, or both?** If sim, which one (MuJoCo / Isaac / Drake)? If real hardware, how
-   do you collect demonstrations — teleop, kinesthetic teaching, scripted policies? I'd
-   rather learn the tooling you actually use than something adjacent.
+### About redundancy and retargeting
 
-3. **How much data is "enough" in your setting?** Tens of demos, hundreds, thousands? I have
-   no intuition for the scale and it seems like it drives every other decision.
+2. **How much worse does redundancy get on a 16-DOF hand?** My toy case had two discrete
+   solutions. An Allegro hand grasping an object has a continuum of valid configurations. Is
+   choosing among them mostly handled by the retargeting step, by the reward, or does it
+   just not bite as hard in practice as I'd expect?
 
-### About the multimodality result I hit (stage 1)
+3. **In Holo-Dex / HuDOR, what actually defines a "correct" retargeting** from a human hand
+   to a robot hand with different kinematics? Fingertip positions, joint angles, contact
+   pattern, or task outcome? This feels like the crux and I can't tell from the papers which
+   choice is doing the work.
 
-4. **Does multimodality bite you in practice, and how do you handle it?** I ran a small
-   experiment where an MLP trained to do inverse kinematics on a 2-link arm with joint-space
-   MSE fails badly (0.94 m error on a 1.7 m arm) purely because two elbow configurations
-   reach each target and MSE learns their average. Switching to a task-space loss through
-   the differentiable kinematics fixed it, 17× better with the same network. My read is that
-   this is the same failure that motivates diffusion policies and action chunking — is that
-   the right way to think about it, or am I over-reading a toy result?
+### About representations (probably the most useful thing for me to learn)
 
-5. **Is differentiating through the physics ever practical for you?** The task-space-loss fix
-   only worked because my forward kinematics was smooth torch code. My assumption is that
-   this breaks down the moment contact is involved, which is why differentiable simulation
-   hasn't taken over. Is that roughly right, or is it more useful than I think?
+4. **Why BYOL and VICReg specifically for the tactile encoders in T-Dex?** Was that a
+   considered choice among self-supervised objectives, or the-thing-that-worked? And is
+   there something about tactile data — sparsity, the fact that contact is mostly nothing
+   then suddenly something — that makes the standard augmentation recipes a bad fit?
+
+5. **What does 2.5 hours of play data actually look like?** I'm trying to understand what
+   makes play data useful rather than just unlabeled. Is it coverage of contact events, or
+   diversity of objects, or something else you were deliberately going for?
+
+### About the tooling and where to be useful
+
+6. **Sim or all real?** My read is that tactile sensing is hard enough to simulate that
+   T-Dex trains entirely on real teleoperated data, which suggests "learn Isaac Sim" is the
+   wrong instinct for your lab. Is that right, or does sim still play a role somewhere?
+
+7. **Is differentiating through the physics ever practical for you?** My task-space-loss fix
+   only worked because the kinematics were smooth torch code, and I assume contact and
+   friction break that. Is differentiable simulation useful in your work at all, or is it
+   still mostly a promise?
 
 ### About direction
 
-6. **Given these three tutorials, where were you pointing me?** My reading is that seq2seq
-   with attention is the ancestor of the transformer, and a policy like ACT is
-   architecturally an encoder-decoder that emits action chunks instead of words — so the
-   tutorials are teaching the machinery, and the robot part is a change of input and output
-   representation. Is that the intended takeaway, or is there something else in there I'm
-   missing?
+8. **Given these three tutorials, where were you pointing me?** My working theory: tactile
+   and proprioceptive streams are variable-length sequences (the char-RNN case), retargeting
+   human poses to robot joints is structurally translation (the seq2seq case), and attention
+   is how you decide which contacts matter right now. Also that both are deliberately "from
+   scratch" about data preprocessing, which is the actual bottleneck in your area. Is that
+   the intended arc, or am I inventing a story?
 
-7. **What should I read after this?** I've got ACT, Diffusion Policy, and OpenVLA on my list
-   as the three that seem most cited. If there's one paper that's closest to what you
-   actually work on, I'd rather spend the time there.
+9. **What should I read after this?** Current list is VINN, BYOL/VICReg, Diffusion Policy,
+   and the optimal-transport reward matching in TAVI. If there's one that's closest to what
+   you're working on right now, I'd rather spend the time there.
+
+10. **Is there a piece of infrastructure I could usefully build or fix?** Not asking to be
+    put on a project — but data pipelines, teleop tooling, eval harnesses, and RUKA assembly
+    are all real work, and I'd rather be useful at the boring end than wait until I've read
+    enough papers.
 
 ---
 
