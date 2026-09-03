@@ -13,7 +13,7 @@ downhill.
     loss(theta) = || forward_kinematics(theta) - target ||^2
 
 and let autograd hand us d(loss)/d(theta). No neural network anywhere -- just the same
-five-line optimization ritual from 02_autograd.py, applied to a robot.
+five-line optimization ritual from 05_autograd.py, applied to a robot.
 
 Three things in here matter more than the IK itself, because all three come back when you
 get to real policies:

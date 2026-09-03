@@ -56,6 +56,28 @@ out) and code (a faithful walkthrough of the tutorial, plus a robotics bridge).
 | 3 | Encoder-decoder, attention, teacher forcing | [Seq2Seq Translation](https://docs.pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) | Retargeting as translation: human hand poses -> robot joint commands, with an attention heatmap |
 | 4 | Non-parametric policies and self-supervised representations | VINN, BYOL/VICReg, T-Dex | Nearest-neighbor policy vs. the regression policy that failed in stage 1 |
 
+### Stage 1 in detail
+
+`concepts/stage1_basics/` maps one file per section of [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html),
+using the tutorial's own numbering:
+
+| File | Tutorial section | Status |
+| --- | --- | --- |
+| `00_quickstart.py` | Quickstart | todo |
+| `01_tensors.py` | Tensors | done |
+| `02_datasets_dataloaders.py` | Datasets & DataLoaders | todo |
+| `03_transforms.py` | Transforms | todo |
+| `04_build_model.py` | Build the Neural Network | todo |
+| `05_autograd.py` | Automatic Differentiation | done |
+| `06_optimization.py` | Optimizing Model Parameters | todo |
+| `07_save_load.py` | Save and Load the Model | todo |
+
+Each file follows the tutorial's sections in order, then adds a "beyond the tutorial"
+part for the things the tutorial mentions in passing that cause most real bugs.
+
+A `*_verbatim.py` file, where present, is the tutorial's code with nothing added — meant to
+be read side by side with the webpage before reading the annotated version.
+
 ## Layout
 
 ```

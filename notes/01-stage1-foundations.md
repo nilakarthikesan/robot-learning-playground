@@ -2,7 +2,7 @@
 
 Source: [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html)
 
-Code: `concepts/stage1_basics/01_tensors.py`, `concepts/stage1_basics/02_autograd.py`,
+Code: `concepts/stage1_basics/01_tensors.py`, `concepts/stage1_basics/05_autograd.py`,
 `robotics/stage1_ik_autograd.py`, `robotics/stage1_learn_fk.py`
 
 ---

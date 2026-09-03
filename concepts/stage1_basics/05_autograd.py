@@ -1,6 +1,6 @@
 """Stage 1b: autograd.
 
-Run me:  python concepts/stage1_basics/02_autograd.py
+Run me:  python concepts/stage1_basics/05_autograd.py
 
 Covers the "Automatic Differentiation" and "Optimization" sections of
 https://docs.pytorch.org/tutorials/beginner/basics/intro.html
