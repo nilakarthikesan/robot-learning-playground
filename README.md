@@ -56,6 +56,14 @@ out) and code (a faithful walkthrough of the tutorial, plus a robotics bridge).
 | 3 | Encoder-decoder, attention, teacher forcing | [Seq2Seq Translation](https://docs.pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) | Retargeting as translation: human hand poses -> robot joint commands, with an attention heatmap |
 | 4 | Non-parametric policies and self-supervised representations | VINN, BYOL/VICReg, T-Dex | Nearest-neighbor policy vs. the regression policy that failed in stage 1 |
 
+### Interpretability bridge
+
+`robotics/stage1_interpret_fk.py` turns the 2-link arm into a small mechanistic-
+interpretability test bed. It probes whether the learned network's hidden layer contains the
+known geometric quantities, then mean-ablates individual units to distinguish information
+that is merely decodable from information that causally affects fingertip accuracy. See
+`notes/01b-mechanistic-interpretability.md` for the results and limitations.
+
 ### Stage 1 in detail
 
 `concepts/stage1_basics/` maps one file per section of [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html),
